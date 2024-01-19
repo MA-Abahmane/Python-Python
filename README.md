@@ -45,6 +45,7 @@ Game Display:
 ![img](https://github.com/MA-Abahmane/Python-Python/blob/main/assets/end.png)
 
 <br>
+<hr>
 
 #### Made in collaboration:
 **Mohamed Amine Abahmane** 🤝🏼 **Mohamed Droussi**
