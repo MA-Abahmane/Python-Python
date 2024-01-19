@@ -147,6 +147,7 @@ def play():
 
 # Tkinter initialization
 window = Tk()
+window.wm_iconbitmap('assets/py.ico')
 window.title("Python Snake Game")
 
 label = Label(window, text="Points:{}".format(score), font=('consolas', 20))
