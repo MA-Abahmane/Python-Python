@@ -4,6 +4,7 @@ Dive into a sleek Python Snake Game crafted with Python and TKinter. Guide the s
 
 ### Requirments
 IDE
+<br>
 Python
 
 ### Snake Movement:
