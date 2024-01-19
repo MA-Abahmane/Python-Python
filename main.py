@@ -132,10 +132,6 @@ def play():
     food = Food()
     next_turn(snake, food)
 
-    # Create Retry button before starting the main loop
-    retry_button = Button(window, text="Retry", command=retry_game)
-    retry_button.pack()
-
 # Tkinter initialization
 window = Tk()
 window.title("Python Snake Game")
