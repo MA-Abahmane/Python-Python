@@ -27,6 +27,7 @@ class Snake:
         self.squares = []
         self.eaten_balls = 0
 
+        # Initialize snake coordinates and squares
         for _ in range(BODY_SIZE):
             self.coordinates.append([0, 0])
 
@@ -37,11 +38,13 @@ class Snake:
             self.squares.append(square)
 
     def change_color(self, color):
+        # Change color of snake squares
         for square in self.squares:
             canvas.itemconfig(square, fill=color)
 
 class Food:
     def __init__(self):
+        # Generate random coordinates for food
         x = random.randint(0, (WIDTH // SPACE_SIZE) - 1) * SPACE_SIZE
         y = random.randint(0, (HEIGHT // SPACE_SIZE) - 1) * SPACE_SIZE
         self.coordinates = [x, y]
@@ -55,6 +58,7 @@ class Food:
 def next_turn(snake, food):
     x, y = snake.coordinates[0]
 
+    # Update coordinates based on direction
     if direction == "up":
         y -= SPACE_SIZE
     elif direction == "down":
@@ -66,12 +70,14 @@ def next_turn(snake, food):
 
     snake.coordinates.insert(0, (x, y))
 
+    # Create a new square for the snake
     square = canvas.create_rectangle(
         x, y, x + SPACE_SIZE, y + SPACE_SIZE, fill=SNAKE)
 
     snake.squares.insert(0, square)
 
     if x == food.coordinates[0] and y == food.coordinates[1]:
+        # Handle when snake eats the food
         global score
         score += 1
         snake.eaten_balls += 1
@@ -84,6 +90,7 @@ def next_turn(snake, food):
         canvas.delete("food_text")
         food = Food()
     else:
+        # Remove the last square if the snake didn't eat food
         del snake.coordinates[-1]
         canvas.delete(snake.squares[-1])
         del snake.squares[-1]
@@ -91,10 +98,12 @@ def next_turn(snake, food):
     if check_collisions(snake):
         game_over()
     else:
+        # Schedule the next turn after a delay
         window.after(SPEED, next_turn, snake, food)
 
 def change_direction(new_direction):
     global direction
+    # Change direction if it's a valid move
     if new_direction in ['left', 'right', 'up', 'down']:
         if (new_direction == 'left' and direction != 'right') or \
            (new_direction == 'right' and direction != 'left') or \
@@ -104,17 +113,20 @@ def change_direction(new_direction):
 
 def check_collisions(snake):
     x, y = snake.coordinates[0]
+    # Check if snake collides with walls or itself
     return x < 0 or x >= WIDTH or y < 0 or y >= HEIGHT or any(x == body_part[0] and y == body_part[1] for body_part in snake.coordinates[1:])
 
 def game_over():
+    # Handle game over scenario
     canvas.delete(ALL)
     canvas.create_text(WIDTH / 2, HEIGHT / 3, font=('consolas', 70),
                        text="GAME OVER", fill="red", tag="gameover")
     global play_button
-    play_button = Button(window, text="READY?", font=('consolas', 20), command=retry_game, border=5, width=8, height=1)
+    play_button = Button(window, text="READY?", font=('consolas', 20), command=retry_game, border=5, width=8, relief='flat')
     play_button.place(relx=0.5, rely=0.6, anchor=CENTER)
 
 def retry_game():
+    # Retry the game after game over
     play_button.destroy()
     global score, direction, snake, food
     score = 0
@@ -126,6 +138,7 @@ def retry_game():
     next_turn(snake, food)
 
 def play():
+    # Start the game by destroying the play button and initializing snake and food
     play_button.destroy()
     canvas.delete(ALL)
     snake = Snake()
@@ -167,7 +180,7 @@ canvas.create_text((WIDTH / 3) * 2 + 29, HEIGHT / 3, font=('consolas', 50, 'bold
                    text="Python", fill="blue", tag="title")
 
 # Create Play button
-play_button = Button(window, text="PLAY", font=('consolas', 20), command=play, border=7, width=10)
+play_button = Button(window, text="PLAY", font=('consolas', 20), command=play, border=7, width=10, relief='flat')
 play_button.place(relx=0.5, rely=0.6, anchor=CENTER)
 
 # Start the Tkinter main loop
