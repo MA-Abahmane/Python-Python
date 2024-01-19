@@ -34,6 +34,15 @@ pg.mixer.init()
 
 class Snake:
     def __init__(self):
+        """
+        Initialize the Snake class.
+
+        Attributes:
+        - body_size: Number of squares in the snake's body.
+        - coordinates: List of (x, y) coordinates representing the snake's body.
+        - squares: List of Tkinter canvas squares representing the snake's body.
+        - eaten_balls: Counter for the number of eaten food items.
+        """
         self.body_size = BODY_SIZE
         self.coordinates = []
         self.squares = []
@@ -50,12 +59,24 @@ class Snake:
             self.squares.append(square)
 
     def change_color(self, color):
+        """
+        Change the color of the snake's body squares.
+
+        Parameters:
+        - color: The new color for the snake.
+        """
         # Change color of snake squares
         for square in self.squares:
             canvas.itemconfig(square, fill=color)
 
 class Food:
     def __init__(self):
+        """
+        Initialize the Food class.
+
+        Attributes:
+        - coordinates: List representing the (x, y) coordinates of the food.
+        """
         # Generate random coordinates for food
         x = random.randint(0, (WIDTH // SPACE_SIZE) - 1) * SPACE_SIZE
         y = random.randint(0, (HEIGHT // SPACE_SIZE) - 1) * SPACE_SIZE
@@ -67,7 +88,15 @@ class Food:
         # Create text at the center of the oval
         canvas.create_text(x + SPACE_SIZE // 2, y + SPACE_SIZE // 2, text=FOOD_EMOJI, font=('Arial', 20), fill="white", tags="food_text")
 
+
 def next_turn(snake, food):
+    """
+    Execute the next turn in the game.
+
+    Parameters:
+    - snake: An instance of the Snake class.
+    - food: An instance of the Food class.
+    """
     x, y = snake.coordinates[0]
 
     # Update coordinates based on direction
@@ -119,7 +148,14 @@ def next_turn(snake, food):
         # Schedule the next turn after a delay
         window.after(SPEED, next_turn, snake, food)
 
+
 def change_direction(new_direction):
+    """
+    Change the direction of the snake based on user input.
+
+    Parameters:
+    - new_direction: The new direction ('left', 'right', 'up', or 'down').
+    """
     global direction
     # Change direction if it's a valid move
     if new_direction in ['left', 'right', 'up', 'down']:
@@ -129,12 +165,26 @@ def change_direction(new_direction):
            (new_direction == 'down' and direction != 'up'):
             direction = new_direction
 
+
 def check_collisions(snake):
+    """
+    Check for collisions in the game.
+
+    Parameters:
+    - snake: An instance of the Snake class.
+
+    Returns:
+    - True if there is a collision, False otherwise.
+    """
     x, y = snake.coordinates[0]
     # Check if snake collides with walls or itself
     return x < 0 or x >= WIDTH or y < 0 or y >= HEIGHT or any(x == body_part[0] and y == body_part[1] for body_part in snake.coordinates[1:])
 
+
 def game_over():
+    """
+    Handle the game over scenario.
+    """
     # Handle game over scenario
     canvas.delete(ALL)
     canvas.create_text(WIDTH / 2, HEIGHT / 3, font=('consolas', 70),
@@ -149,7 +199,11 @@ def game_over():
     play_button = Button(window, text="READY?", font=('consolas', 20), command=retry_game, border=5, width=8, relief='flat')
     play_button.place(relx=0.5, rely=0.6, anchor=CENTER)
 
+
 def retry_game():
+    """
+    Retry the game after game over.
+    """
     # Retry the game after game over
     play_button.destroy()
     global score, direction, snake, food
@@ -161,7 +215,11 @@ def retry_game():
     food = Food()
     next_turn(snake, food)
 
+
 def play():
+    """
+    Start the game by initializing the snake and food after pressing the PLAY button.
+    """
     # Play background music
     music_num = random.randint(1, 5)
     print(music_num)
@@ -174,6 +232,7 @@ def play():
     snake = Snake()
     food = Food()
     next_turn(snake, food)
+
 
 # Tkinter initialization
 window = Tk()
@@ -204,7 +263,7 @@ window.bind('<Right>', lambda event: change_direction('right'))
 window.bind('<Up>', lambda event: change_direction('up'))
 window.bind('<Down>', lambda event: change_direction('down'))
 
-# Display Python Python title
+# Display the 'Python Python' title
 canvas.create_text((WIDTH / 3) - 29, HEIGHT / 3, font=('consolas', 50, 'bold'),
                    text="Python", fill="yellow", tag="title")
 canvas.create_text((WIDTH / 3) * 2 + 29, HEIGHT / 3, font=('consolas', 50, 'bold'),
