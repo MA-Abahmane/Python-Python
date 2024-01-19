@@ -1,7 +1,16 @@
 #!/usr/bin/env python3
 
-from tkinter import *
+"""
+Python-Python
+Dive into a sleek Python Snake Game crafted with Python and TKinter.
+Guide the serpent, chase apples, and aim for the high score in this
+elegantly coded adventure.
+"""
+
 import random
+import pygame as pg
+from tkinter import *
+
 
 # Constants
 WIDTH = 500
@@ -10,7 +19,7 @@ SPEED = 200
 SPACE_SIZE = 20
 BODY_SIZE = 2
 SNAKE = "#FFFF00"
-FOOD_COLOR_THRESHOLD = 2
+ECDYSIS = 2
 BLUE_SNAKE_COLOR = "#0000FF"
 BACKGROUND = "#000000"
 FOOD_EMOJI = '🍎'
@@ -19,6 +28,9 @@ FOOD_EMOJI = '🍎'
 score = 0
 direction = 'down'
 play_button = None  # Initialize play_button as None
+
+# Initialise pygame mixer
+pg.mixer.init()
 
 class Snake:
     def __init__(self):
@@ -82,8 +94,14 @@ def next_turn(snake, food):
         score += 1
         snake.eaten_balls += 1
 
-        if snake.eaten_balls > FOOD_COLOR_THRESHOLD:
+        # Snake skin change (Yellow | Blue)
+        if snake.eaten_balls > ECDYSIS:
             snake.change_color(BLUE_SNAKE_COLOR)
+
+        # set and play eating sound
+        sound = pg.mixer.Sound('assets/eat.mp3')
+        sound.set_volume(1)
+        sound.play()
 
         label.config(text="Points:{}".format(score))
         canvas.delete("food")
@@ -121,6 +139,12 @@ def game_over():
     canvas.delete(ALL)
     canvas.create_text(WIDTH / 2, HEIGHT / 3, font=('consolas', 70),
                        text="GAME OVER", fill="red", tag="gameover")
+
+    # set and play eating sound
+    sound = pg.mixer.Sound('assets/gameover.wav')
+    sound.set_volume(1)
+    sound.play()
+    
     global play_button
     play_button = Button(window, text="READY?", font=('consolas', 20), command=retry_game, border=5, width=8, relief='flat')
     play_button.place(relx=0.5, rely=0.6, anchor=CENTER)
@@ -138,6 +162,12 @@ def retry_game():
     next_turn(snake, food)
 
 def play():
+    # Play background music
+    music_num = random.randint(1, 5)
+    print(music_num)
+    pg.mixer.music.load(f"assets/music{music_num}.mp3")
+    pg.mixer.music.set_volume(0.25)
+    pg.mixer.music.play(-1)
     # Start the game by destroying the play button and initializing snake and food
     play_button.destroy()
     canvas.delete(ALL)
