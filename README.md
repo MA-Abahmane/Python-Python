@@ -31,7 +31,7 @@ Enhanced proficiency in programming languages, especially in handling user input
 Improved problem-solving skills through addressing challenges in game development.
 Conclusion:
 
-In conclusion, the Snake Game project has been a rewarding endeavor, allowing me to apply theoretical knowledge to practical game development.
+In conclusion, the Snake Game project has been a rewarding endeavor, allowing us to apply theoretical knowledge to practical game development.
 I hope you enjoy a quick demonstration of the game and appreciate the effort put into creating this classic yet captivating project.
 Thank you for your attention, and I'm open to any questions you may have!
 
