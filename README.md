@@ -38,6 +38,7 @@ Thank you for your attention, and I'm open to any questions you may have!
 Game Display:
 <hr>
 <br>
+
 ![img](https://github.com/MA-Abahmane/Python-Python/blob/main/assets/start.png)
 ![img](https://github.com/MA-Abahmane/Python-Python/blob/main/assets/ingame1.png)
 ![img](https://github.com/MA-Abahmane/Python-Python/blob/main/assets/ingame2.png)
